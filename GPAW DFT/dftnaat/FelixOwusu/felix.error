@@ -1,0 +1,3 @@
+ModuleCmd_Load.c(208):ERROR:105: Unable to locate a modulefile for 'chpc/python/anaconda/3-2019.10'
+/mnt/lustre/users/yabdulai/naat/dftnaat/FelixOwusu/NonConstraints.py:96: DeprecationWarning: Please use atoms.cell.cellpar() instead
+  z = np.linspace(0, atoms.get_cell_lengths_and_angles()[2], len(e_potential))

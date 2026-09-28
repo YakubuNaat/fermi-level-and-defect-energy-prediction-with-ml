@@ -1,0 +1,26 @@
+#!/bin/bash
+#PBS -P Fe
+#PBS -N Fe
+#PBS -l select=1:ncpus=24:mpiprocs=24
+#PBS -l walltime=94:00:00
+#PBS -q smp
+#PBS -m be
+#PBS -M natyakubu5@gmail.com
+#PBS -r n
+#PBS -o /mnt/lustre/users/yabdulai/naat/dftnaat/PWscf/Fe_output
+#PBS -e /mnt/lustre/users/yabdulai/naat/dftnaat/PWscf/Fe_error
+#PBS
+
+module purge
+module add chpc/qespresso/6.5/openmpi-3.1.0/gcc-6.1.0
+export QESPRESSO=/apps/chpc/chem/qespresso/6.5_gnu
+
+ulimit -s unlimited
+pushd /mnt/lustre/users/yabdulai/naat/dftnaat/PWscf
+lfs setstripe -d /mnt/lustre/users/yabdulai/naat/dftnaat/PWscf
+lfs setstripe -c 12 ./
+exe=$QESPRESSO/bin/pw.x
+mpirun -np 24 $exe -inp Fe.in > Fe.out
+#Remove unused files
+rm *wfc* *mix*
+popd

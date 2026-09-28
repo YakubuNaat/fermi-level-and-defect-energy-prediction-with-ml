@@ -1,0 +1,44 @@
+#PBS -N Pristine
+#PBS -l select=1:ncpus=24:mpiprocs=24:mem=64GB
+#PBS -l walltime=70:00:00
+#PBS -q smp
+#PBS -m be
+#PBS -M felixo6996@gmail.com
+#PBS -r n
+#PBS -o /home/yabdulai/lustre/naat/dftnaat/FelixOwusu/pristine.out
+#PBS -e /home/yabdulai/lustre/naat/dftnaat/FelixOwusu/pristineRelax.error
+#PBS -P MATS1146
+
+# Load the required modules if needed
+module purge
+
+module add chpc/python/anaconda/3-2019.10
+#source /home/yabdulai/.bashrc
+#source /apps/chpc/chem/anaconda3-2019.10/etc/profile.d/conda.sh
+
+source /home/apps/chpc/compmech/gpaw/setgpaw
+
+# Set the GPAW_SETUP_PATH environment variable
+export GPAW_SETUP_PATH=/home/yabdulai/lustre/naat/gpaw_setups
+
+
+module load chpc/python/anaconda/3-2019.10
+# Change directory to where the script is located
+cd /home/yabdulai/lustre/naat/dftnaat/FelixOwusu
+
+# Run your Python script
+python Pristine.py
+
+# Run the rest of your commands if needed
+# mpirun -np 96 $exe -inp neb.in > neb.out
+ulimit -s unlimited
+pushd /home/yabdulai/lustre/naat/dftnaat/FelixOwusu
+# fs setstripe -d /mnt/lustre/users/ckwawu/Felix
+# fs setstripe -c 12 .
+# exe=$QESPRESSO/bin/pw.x
+# mpirun -np 96 $exe -inp scf.in > scf.out
+
+# Remove unused files
+# rm *wfc* *mix*
+# popd
+
